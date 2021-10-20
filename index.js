@@ -10,25 +10,21 @@ const getDocument = async () => {
 
     axios(url)
         .then(response => {
-            const html = response.data;
+            let html = response.data;
 
             $('img', html).each(async function () {
                 let url = $(this).attr('src');
-
-                console.log(url);
 
                 const data = await fetch(url);
                 const blob = await data.blob();
                 const iresult = await blobToData(blob);
 
-                console.log(iresult);
-
-                url = iresult;
-
-
-                //    items.insert.image = iresult;
+                $('img[src="' + url + '"]').attr('src', iresult);
 
             });
+
+            console.log("final", html);
+
         });
 };
 
